@@ -14,7 +14,12 @@ $container['AuthController'] = function ($c) {
     return new \App\Controllers\Auth\AuthController($c);
 };
 
-// Password controller
-$container['PasswordController'] = function ($c) {
-    return new \App\Controllers\Auth\PasswordController($c);
+// Account controller
+$container['AccountController'] = function ($c) {
+    return new \App\Controllers\Auth\AccountController($c);
+};
+
+// Ranking controller
+$container['RankingController'] = function ($c) {
+    return new \App\Controllers\RankingController($c);
 };

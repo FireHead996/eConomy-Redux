@@ -3,6 +3,7 @@
 namespace App\Extensions;
 
 use App\Models\User;
+use App\Models\UserStorage;
 
 class Auth
 {
@@ -24,7 +25,7 @@ class Auth
     }
     
     /**
-     * Returns true if user is logged, false oderwise
+     * Returns true if user is logged, false otherwise
      *
      * @return bool
      */
@@ -34,13 +35,21 @@ class Auth
     }
 
     /**
-     * Returns user model, false oderwise
+     * Returns user model, false otherwise
      *
      * @return User / false
      */
     public function user()
     {
         return $this->check() ? User::find($_SESSION['user']) : false;
+    }
+    
+    /**
+     * Returns user storage model, false otherwise
+     */
+    public function userStorage()
+    {
+        return $this->check() ? UserStorage::where('uid', $_SESSION['user'])->first() : false;
     }
 
     /**

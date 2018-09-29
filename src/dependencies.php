@@ -25,7 +25,8 @@ $container['view'] = function ($c) {
     // Add globaly available authentication methods
     $view->getEnvironment()->addGlobal('auth', [
         'check' => $c->auth->check(),
-        'user' => $c->auth->user()
+        'user' => $c->auth->user(),
+        'storage' => $c->auth->userStorage()
     ]);
 
     // Add flash messages

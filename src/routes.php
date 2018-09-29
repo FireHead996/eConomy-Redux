@@ -20,10 +20,13 @@ $app->group('', function () {
 
 // User access routes
 $app->group('', function () {
+    // Ranging
+    $this->get('/ranking', 'RankingController:index')->setName('ranking');
+    
+    // Password changing
+    $this->get('/auth/password/change', 'AccountController:getChangePassword')->setName('auth.password.change');
+    $this->post('/auth/password/change', 'AccountController:postChangePassword');
+    
     // Logout
     $this->get('/auth/signout', 'AuthController:getSignOut')->setName('auth.signout');
-
-    // Password changing
-    $this->get('/auth/password/change', 'PasswordController:getChangePassword')->setName('auth.password.change');
-    $this->post('/auth/password/change', 'PasswordController:postChangePassword');
 })->add(new UserMiddleware($container));
