@@ -1,0 +1,70 @@
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{{ path_for('home') }}">eConomy Redux</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                {% if auth.check %}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Konto <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Zmiana hasła</a></li>
+                        <li><a href="#">Avatar</a></li>
+                        <li><a href="#">Opis</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Firma <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Moje firmy</a></li>
+                        <li><a href="#">Załóż działalność</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Handel <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Ceny towarów</a></li>
+                        <li><a href="#">Handel towarami</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Poczta <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Odebrane</a></li>
+                        <li><a href="#">Wysłane</a></li>
+                        <li><a href="#">Nowa wiadomość</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">VIP</a></li>
+                <li><a href="#">Ranking</a></li>
+                
+                {% if auth.isAdmin %}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Gracze</a></li>
+                        <li><a href="#">Dodaj kody VIP</a></li>
+                        <li><a href="#">Wiadomość masowa</a></li>
+                    </ul>
+                </li>
+                {% endif %}
+                
+                {% endif %}
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if auth.check %}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ plr.nick }} <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ path_for('auth.signout') }}">Wyloguj</a></li>
+                    </ul>
+                </li>
+                {% else %}
+                <li><a href="{{ path_for('auth.signup') }}">Zarejestruj się</a></li>
+                <li><a href="{{ path_for('auth.signin') }}">Zaloguj się</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
