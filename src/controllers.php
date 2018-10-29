@@ -24,6 +24,11 @@ $container['RankingController'] = function ($c) {
     return new \App\Controllers\RankingController($c);
 };
 
+// Exchange controller
+$container['ExchangeController'] = function ($c) {
+    return new \App\Controllers\ExchangeController($c);
+};
+
 // Mail controller
 $container['MailController'] = function ($c) {
     return new \App\Controllers\Mail\MailController($c);

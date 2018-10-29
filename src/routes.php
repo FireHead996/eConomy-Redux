@@ -20,8 +20,14 @@ $app->group('', function () {
 
 // User access routes
 $app->group('', function () {
-    // Ranging
+    // Ranking
     $this->get('/ranking', 'RankingController:index')->setName('ranking');
+    
+    // Exchange
+    $this->get('/exchange/prices', 'ExchangeController:prices')->setName('exchange.prices');
+    
+    $this->get('/exchange', 'ExchangeController:getExchange')->setName('exchange');
+    $this->post('/exchange', 'ExchangeController:postExchange');
     
     // Mail
     $this->get('/mail/received', 'MailController:getReceivedMessages')->setName('mail.received');

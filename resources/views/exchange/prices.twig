@@ -1,0 +1,63 @@
+{% extends "templates/app.twig" %}
+
+{% block container %}
+<div class="panel panel-default">
+    <div class="panel-heading">Ceny towarów</div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-3 col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><center>Surowce</center></div>
+                    <div class="panel-body">
+                        <font color="{% if exchange.raw_materials_hossa %}green{% else %}red{% endif %}"><b><center>{{ exchange.raw_materials }} $/t {% if exchange.raw_materials_hossa %}↑{% else %}↓{% endif %}</center></b></font>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3 col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><center>Tekstylia</center></div>
+                    <div class="panel-body">
+                        <font color="{% if exchange.fabrics_hossa %}green{% else %}red{% endif %}"><b><center>{{ exchange.fabrics }} $/t {% if exchange.fabrics_hossa %}↑{% else %}↓{% endif %}</center></b></font>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3 col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><center>Sprzęt</center></div>
+                    <div class="panel-body">
+                        <font color="{% if exchange.equipment_hossa %}green{% else %}red{% endif %}"><b><center>{{ exchange.equipment }} $/t {% if exchange.equipment_hossa %}↑{% else %}↓{% endif %}</center></b></font>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3 col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><center>Żywność</center></div>
+                    <div class="panel-body">
+                        <font color="{% if exchange.food_hossa %}green{% else %}red{% endif %}"><b><center>{{ exchange.food }} $/t {% if exchange.food_hossa %}↑{% else %}↓{% endif %}</center></b></font>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    
+<div class="panel panel-default">
+    <div class="panel-heading">Ostatnie zdarzenia</div>
+    <div class="panel-body">
+    {% if events|length > 0 %}
+        {% for event in events %}
+            <div class="alert {% if event.subject %}alert-success{% else %}alert-danger{% endif %}" role="alert">
+                {{ event.content }}
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="alert alert-info" role="alert">
+            Jak na razie żadnych zdarzeń na giełdzie.
+        </div>
+    {% endif %}
+    </div>
+</div>
+{% endblock %}

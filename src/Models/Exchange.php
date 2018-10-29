@@ -21,8 +21,12 @@ class Exchange extends Model
     protected $fillable = [
         'last_change',
         'raw_materials',
+        'raw_materials_hossa',
         'fabrics',
+        'fabrics_hossa',
         'equipment',
+        'equipment_hossa',
         'food',
+        'food_hossa'
     ];
 }
