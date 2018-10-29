@@ -27,7 +27,6 @@ class CsrfViewMiddleware extends Middleware
             ',
         ]);
         
-        $response = $next($request, $response);
-        return $response;
+        return $next($request, $response);
     }
 }

@@ -24,6 +24,7 @@ class User extends Model
         'nickname',
         'cash',
         'bank_acc',
+        'points',
         'avatar',
         'banned',
         'last_action',
