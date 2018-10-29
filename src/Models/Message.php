@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
 class Message extends Model
 {
@@ -19,6 +20,7 @@ class Message extends Model
      * @var array
      */
     protected $fillable = [
+        'id',
         'from',
         'to',
         'subject',
@@ -26,4 +28,10 @@ class Message extends Model
         'status',
         'type',
     ];
+    
+    public function convertIDsToNicks()
+    {
+        $this->from = User::find($this->from)->nickname;
+        $this->to = User::find($this->to)->nickname;
+    }
 }

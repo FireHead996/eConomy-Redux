@@ -31,9 +31,9 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Poczta <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Odebrane</a></li>
-                        <li><a href="#">Wysłane</a></li>
-                        <li><a href="#">Nowa wiadomość</a></li>
+                        <li><a href="{{ path_for('mail.received') }}">Odebrane</a></li>
+                        <li><a href="{{ path_for('mail.sent') }}">Wysłane</a></li>
+                        <li><a href="{{ path_for('mail.new') }}">Nowa wiadomość</a></li>
                     </ul>
                 </li>
                 <li><a href="#">VIP</a></li>

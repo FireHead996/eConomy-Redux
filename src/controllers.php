@@ -23,3 +23,8 @@ $container['AccountController'] = function ($c) {
 $container['RankingController'] = function ($c) {
     return new \App\Controllers\RankingController($c);
 };
+
+// Mail controller
+$container['MailController'] = function ($c) {
+    return new \App\Controllers\Mail\MailController($c);
+};

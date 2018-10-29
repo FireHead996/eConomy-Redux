@@ -13,9 +13,30 @@ use App\Validation\Rules\UsernameOccupied as UsernameOccupied;
 use App\Validation\Rules\PasswordValid as PasswordValid;
 use App\Validation\Rules\PasswordOld as PasswordOld;
 use App\Validation\Rules\PasswordNotOld as PasswordNotOld;
+use App\Validation\Rules\MailToSelf as MailToSelf;
 
 class Validator extends v
 {
+    public function validateNewMail($request)
+    {
+        $fields = [
+            'to',
+            'subject',
+            'content',
+        ];
+        
+        foreach ($fields as $field) {
+            $this->addField($field, $request->getParam($field));
+            $this->addRule($field, new Rule\Required())
+                ->setMessage('To pole nie może być puste');
+        }
+        
+        $this->addRule('to', new UsernameOccupied());
+        $this->addRule('to', new MailToSelf($_SESSION['user']));
+        
+        return $this->validate();
+    }
+    
     /**
      * Validate register form
      *
@@ -44,8 +65,6 @@ class Validator extends v
             ->setMessage('Wprowadź poprawny adres email');
         $this->addRule('email', new EmailAvailable());
         $this->addRule('name', new UsernameAvailable());
-        //$this->addRule('name', new Rule\Alphanumeric())
-        //    ->setMessage('To pole przyjmuje tylko wartości alfanumeryczne');
 
         return $this->validate();
     }

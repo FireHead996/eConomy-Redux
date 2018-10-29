@@ -1,0 +1,33 @@
+{% extends "templates/app.twig" %}
+
+{% block container %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Skrzynka odbiorcza</h3>
+    </div>
+    <div class="panel-body">
+        {% if messages|length > 0 %}
+            {% for msg in messages %}
+                {{ msg.convertIDsToNicks() }}
+                
+                <div class="panel panel-default">
+                    <div class="panel-heading">{% if msg.status %}<u><b>(NOWA)</b></u>{% endif %} <b><-{{ msg.from }} :</b> {{ msg.subject }}</div>
+                    <div class="panel-body">
+                        {{ msg.content }}
+                        <br/>
+                        <div style="float:right;">
+                            <a href="{{ path_for('mail.new.withnickname', {'nickname': msg.from}) }}" class="btn btn-primary btn-sm">Odpisz</a>
+                            <a href="{{ path_for('mail.received.delete', {'id': msg.id}) }}" class="btn btn-default btn-sm">Usuń</a>
+                        </div>
+                    </div>
+                    <div class="panel-footer">Wysłana: {{ msg.created_at }}</div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="alert alert-info" role="alert">
+                Nie masz obecnie żadnych odebranych wiadomości.
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

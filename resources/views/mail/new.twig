@@ -1,0 +1,51 @@
+{% extends "templates/app.twig" %}
+
+{% block container %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Nowa wiadomość</h3>
+    </div>
+    <div class="panel-body">
+        <form class="form-horizontal" method="POST" action="{{ path_for('mail.new') }}">
+            <div class="form-group{{ errors.to ? ' has-error' : ''}}">
+                <label for="to" class="col-lg-2 control-label">Nick</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" name="to" id="to" placeholder="Nick" {% if nickname %} value="{{nickname}}" {% endif %}>
+                    
+                    {% if errors.to %}
+                    <span class="help-block">{{ errors.to | first }}</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="form-group{{ errors.subject ? ' has-error' : ''}}">
+                <label for="subject" class="col-lg-2 control-label">Temat</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" name="subject" id="subject" placeholder="Temat">
+                    
+                    {% if errors.subject %}
+                    <span class="help-block">{{ errors.subject | first }}</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="form-group{{ errors.content ? ' has-error' : ''}}">
+                <label for="textArea" class="col-lg-2 control-label">Treść</label>
+                <div class="col-lg-10">
+                    <textarea class="form-control" rows="3" name="content" id="content"></textarea>
+                    <!--<span class="help-block">A longer block of help text that breaks onto a new line and may extend beyond one line.</span>-->
+                    
+                    {% if errors.content %}
+                    <span class="help-block">{{ errors.content | first }}</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-10 col-lg-offset-2">
+                    <button type="reset" class="btn btn-default">Wyczyść</button>
+                    <button type="submit" class="btn btn-primary">Wyślij</button>
+                </div>
+            </div>
+            {{ csrf.field | raw }}
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "templates/app.twig" %}
+
+{% block container %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Wysłane</h3>
+    </div>
+    <div class="panel-body">
+        {% if messages|length > 0 %}
+            {% for msg in messages %}
+                {{ msg.convertIDsToNicks() }}
+                
+                <div class="panel panel-default">
+                    <div class="panel-heading"><b>->{{ msg.to }} :</b> {{ msg.subject }}</div>
+                    <div class="panel-body">
+                        {{ msg.content }}
+                        <br/>
+                        <div style="float:right;">
+                            <a href="{{ path_for('mail.sent.delete', {'id': msg.id}) }}" class="btn btn-default btn-sm">Usuń</a>
+                        </div>
+                    </div>
+                    <div class="panel-footer">Wysłana: {{ msg.created_at }}</div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="alert alert-info" role="alert">
+                Nie masz obecnie żadnych wysłanych wiadomości.
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
