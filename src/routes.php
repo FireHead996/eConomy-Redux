@@ -27,7 +27,9 @@ $app->group('', function () {
     $this->get('/exchange/prices', 'ExchangeController:prices')->setName('exchange.prices');
     
     $this->get('/exchange', 'ExchangeController:getExchange')->setName('exchange');
-    $this->post('/exchange', 'ExchangeController:postExchange');
+    
+    $this->post('/exchange/sell', 'ExchangeController:postExchangeSell')->setName('exchange.sell');
+    $this->post('/exchange/buy', 'ExchangeController:postExchangeBuy')->setName('exchange.buy');
     
     // Mail
     $this->get('/mail/received', 'MailController:getReceivedMessages')->setName('mail.received');

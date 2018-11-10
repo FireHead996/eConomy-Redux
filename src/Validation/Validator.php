@@ -14,6 +14,7 @@ use App\Validation\Rules\PasswordValid as PasswordValid;
 use App\Validation\Rules\PasswordOld as PasswordOld;
 use App\Validation\Rules\PasswordNotOld as PasswordNotOld;
 use App\Validation\Rules\MailToSelf as MailToSelf;
+use App\Validation\Rules\MoreOrEqualZero as MoreOrEqualZero;
 
 class Validator extends v
 {
@@ -123,6 +124,24 @@ class Validator extends v
         $this->addRule('password2', new Rule\Equal($request->getParam('password1')))
             ->setMessage('Błędnie powtórzono hasło');
 
+        return $this->validate();
+    }
+    
+    public function validateExchangeForm($request)
+    {
+        $fields = [
+            'raw_materials',
+            'fabrics',
+            'equipments',
+            'food',
+        ];
+        
+        foreach ($fields as $field) {
+            $this->addField($field, $request->getParam($field));
+            $this->addRule($field, new MoreOrEqualZero())
+                ->setMessage('Wypełnij wszystkie pola poprawnie');
+        }
+        
         return $this->validate();
     }
 }

@@ -25,4 +25,17 @@ class UserStorage extends Model
         'equipments',
         'food',
     ];
+    
+    /**
+     * Update user storage
+     * 
+     * @param type $type
+     * @param type $val
+     */
+    public function setStorage($type, $val)
+    {
+        $this->update([
+            $type => $val,
+        ]);
+    }
 }

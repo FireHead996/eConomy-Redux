@@ -1,10 +1,145 @@
 {% extends "templates/app.twig" %}
 
 {% block container %}
-<div class="panel panel-default">
-    <div class="panel-heading">Giełda towarowa</div>
+<!--<div class="panel panel-default">
+    <div class="panel-heading">Giełda towarowa (sprzedaż)</div>
     <div class="panel-body">
-        
+        <form method="POST" action="{{ path_for('exchange.sell') }}">
+            <div class="row">
+                <div class="col-md-3 col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><center>Surowce</center></div>
+                        <div class="panel-body">
+                            <div class="form-group{{ errors.raw_materials ? ' has-error' : ''}}">
+                                <input type="text" class="form-control" id="inputDefault" name="raw_materials" value="0">
+                                
+                                {% if errors.raw_materials %}
+                                <span class="help-block">{{ errors.raw_materials | first }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><center>Tekstylia</center></div>
+                        <div class="panel-body">
+                            <div class="form-group{{ errors.fabrics ? ' has-error' : ''}}">
+                                <input type="text" class="form-control" id="inputDefault" name="fabrics" value="0">
+                                
+                                {% if errors.fabrics %}
+                                <span class="help-block">{{ errors.fabrics | first }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><center>Sprzęt</center></div>
+                        <div class="panel-body">
+                            <div class="form-group{{ errors.equipments ? ' has-error' : ''}}">
+                                <input type="text" class="form-control" id="inputDefault" name="equipments" value="0">
+                                
+                                {% if errors.equipments %}
+                                <span class="help-block">{{ errors.equipments | first }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><center>Żywność</center></div>
+                        <div class="panel-body">
+                            <div class="form-group{{ errors.food ? ' has-error' : ''}}">
+                                <input type="text" class="form-control" id="inputDefault" name="food" value="0">
+                                
+                                {% if errors.food %}
+                                <span class="help-block">{{ errors.food | first }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{ csrf.field | raw }}
+            <center><button type="submit" class="btn btn-primary">Sprzedaj</button></center>
+        </form>
+    </div>
+</div>-->
+
+<div class="panel panel-default">
+    <div class="panel-heading">Giełda towarowa (kupno)</div>
+    <div class="panel-body">
+        <form method="POST" action="{{ path_for('exchange.buy') }}">
+            <div class="row">
+                <div class="col-md-3 col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><center>Surowce</center></div>
+                        <div class="panel-body">
+                            <div class="form-group{{ errors.raw_materials ? ' has-error' : ''}}">
+                                <input type="text" class="form-control" id="inputDefault" name="raw_materials" value="0">
+                                
+                                {% if errors.raw_materials %}
+                                <span class="help-block">{{ errors.raw_materials | first }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><center>Tekstylia</center></div>
+                        <div class="panel-body">
+                            <div class="form-group{{ errors.fabrics ? ' has-error' : ''}}">
+                                <input type="text" class="form-control" id="inputDefault" name="fabrics" value="0">
+                                
+                                {% if errors.fabrics %}
+                                <span class="help-block">{{ errors.fabrics | first }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><center>Sprzęt</center></div>
+                        <div class="panel-body">
+                            <div class="form-group{{ errors.equipments ? ' has-error' : ''}}">
+                                <input type="text" class="form-control" id="inputDefault" name="equipments" value="0">
+                                
+                                {% if errors.equipments %}
+                                <span class="help-block">{{ errors.equipments | first }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><center>Żywność</center></div>
+                        <div class="panel-body">
+                            <div class="form-group{{ errors.food ? ' has-error' : ''}}">
+                                <input type="text" class="form-control" id="inputDefault" name="food" value="0">
+                                
+                                {% if errors.food %}
+                                <span class="help-block">{{ errors.food | first }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{ csrf.field | raw }}
+            <center><button type="submit" class="btn btn-primary">Kup</button></center>
+        </form>
     </div>
 </div>
 {% endblock %}
