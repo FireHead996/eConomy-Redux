@@ -17,10 +17,12 @@ class MailController extends Controller
      */
     public function getReceivedMessages($request, $response)
     {
-        $this->view->getEnvironment()->addGlobal('messages', Message::where([
+        $messages = Message::where([
             'to' => $_SESSION['user'],
             'type' => 1,
-        ])->get());
+        ])->get();
+        
+        $this->view->getEnvironment()->addGlobal('messages', $messages);
         
         return $this->view->render($response, 'mail/received.twig');
     }
@@ -34,10 +36,12 @@ class MailController extends Controller
      */
     public function getSentMessages($request, $response)
     {
-        $this->view->getEnvironment()->addGlobal('messages', Message::where([
+        $messages = Message::where([
             'from' => $_SESSION['user'],
             'type' => 2,
-        ])->get());
+        ])->get();
+        
+        $this->view->getEnvironment()->addGlobal('messages', $messages);
         
         return $this->view->render($response, 'mail/sent.twig');
     }
@@ -55,6 +59,27 @@ class MailController extends Controller
     }
     
     /**
+     * Check if 
+     * 
+     * @param type $user
+     * @return boolean
+     */
+    private function validateUserObject($nickname)
+    {
+        $user = User::where('nickname', $nickname);
+        
+        if ($user->count() === 0) {
+            return false;
+        }
+        
+        if ($user->first()->id == $_SESSION['user']) {
+            return false;
+        }
+        
+        return true;
+    }
+
+    /**
      * Render new message form with nickname parameter
      *
      * @param Request $request
@@ -63,10 +88,8 @@ class MailController extends Controller
      * @return View
      */
     public function getNewWithNickname($request, $response, $args)
-    {   
-        $user = User::where('nickname', $args['nickname']);
-        
-        If ($user->count() !== 0 && $user->first()->id != $_SESSION['user']) {
+    {
+        if ($this->validateNickname($args['nickname'])) {
             $this->view->getEnvironment()->addGlobal('nickname', $args['nickname']);
         }
         
@@ -117,9 +140,9 @@ class MailController extends Controller
             return $response->withRedirect($this->router->pathFor('mail.new'));
         }
         
-        $To = User::where('nickname', $request->getParam('to'))->first();
+        $to = User::where('nickname', $request->getParam('to'))->first();
         
-        if (!$To) {
+        if (!$to) {
             $this->flash->addMessage('danger', 'Nie udało się odnaleźć gracza o tym nicku.');
             return $response->withRedirect($this->router->pathFor('mail.new'));
         }
