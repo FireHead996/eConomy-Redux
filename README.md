@@ -1,4 +1,6 @@
 # eConomy-Redux
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FFireHead996%2FeConomy-Redux.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FFireHead996%2FeConomy-Redux?ref=badge_shield)
+
 Polish version below / Polska wersja poniżej
 UWAGA! Gra jest w trakcie produkcji. Jeżeli nie znasz się wystarczająco na programowaniu w PHP - odpuść sobie do czasu wyjścia wersji stabilnej bądź aż ktoś inny postawi bardziej kompletną wersję gry u siebie.
 
@@ -23,3 +25,7 @@ Sam silnik eConomy to silnik strategicznej gry ekonomicznej via www napisany w P
 6. Przejdź do katalogu src i edytuj plik settings.php. Edytuj w nim dane dostępu do bazy danych (host, użytkownik, hasło, nazwa bazy danych).
 7. Ustaw vHost na katalog public.
 8. Wpisz w przeglądarce adres swojego vHost'a i ciesz się postawionym serwerem z grą. :)
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FFireHead996%2FeConomy-Redux.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FFireHead996%2FeConomy-Redux?ref=badge_large)
