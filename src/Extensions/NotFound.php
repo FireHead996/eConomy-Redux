@@ -7,23 +7,8 @@ use Psr\Http\Message\ResponseInterface as ResponseInterface;
 
 class NotFound extends \Slim\Handlers\NotFound
 {
-    /**
-     * DIC
-     *
-     * @var Container
-     */
-    protected $container;
-
-    /**
-     * Constructor
-     *
-     * @param Container $container
-     */
-    public function __construct($container)
-    {
-        $this->container = $container;
-    }
-
+    use \App\Traits\Containerable;
+    
     /**
      * Invoke not found handler
      *
@@ -35,7 +20,8 @@ class NotFound extends \Slim\Handlers\NotFound
     {
         $path = $request->getUri()->getPath();
         
-        if (preg_match('/^.*\.(jpg|jpeg|png|gif)$/i', $path)) {
+        if (preg_match('/^.*\.(jpg|jpeg|png|gif)$/i', $path))
+        {
             return $response->withStatus(404);
         }
 
@@ -51,6 +37,6 @@ class NotFound extends \Slim\Handlers\NotFound
      */
     protected function renderHtmlNotFoundOutput(ServerRequestInterface $request)
     {
-        return $this->container->view->fetch('errors/404.twig');
+        return $this->view->fetch('errors/404.twig');
     }
 }

@@ -25,7 +25,8 @@ class MoreOrEqualZero implements RuleInterface
      */
     public function test($value)
     {
-        if ($value < 0) {
+        if ($value < 0)
+        {
             return false;
         }
 

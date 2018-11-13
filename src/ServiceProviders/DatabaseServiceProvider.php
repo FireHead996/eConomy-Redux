@@ -8,7 +8,8 @@ class DatabaseServiceProvider extends ServiceProvider
 {
     private $capsule;
     
-    public function __construct($c) {
+    public function __construct($c)
+    {
         parent::__construct($c);
         
         $this->capsule = new Capsule;
@@ -17,7 +18,8 @@ class DatabaseServiceProvider extends ServiceProvider
         $this->capsule->bootEloquent();
     }
     
-    public function provide() {
+    public function provide()
+    {
         return $this->capsule;
     }
 }

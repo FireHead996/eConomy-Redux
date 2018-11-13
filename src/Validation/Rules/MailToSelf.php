@@ -38,7 +38,8 @@ class MailToSelf implements RuleInterface
     {
         $user = User::find($this->id);
         
-        if ($user->nickname == $value) {
+        if ($user->nickname == $value)
+        {
             return false;
         }
 

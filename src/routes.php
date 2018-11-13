@@ -1,5 +1,9 @@
 <?php
 
+//
+// Routes
+//
+
 use App\Middleware\AuthMiddleware\GuestMiddleware;
 use App\Middleware\AuthMiddleware\UserMiddleware;
 
@@ -23,24 +27,18 @@ $app->group('', function () {
     // Ranking
     $this->get('/ranking', 'RankingController:index')->setName('ranking');
     
-    // Exchange
+    // Exchange (stock market)
     $this->get('/exchange/prices', 'ExchangeController:prices')->setName('exchange.prices');
-    
     $this->get('/exchange', 'ExchangeController:getExchange')->setName('exchange');
-    
     $this->post('/exchange/sell', 'ExchangeController:postExchangeSell')->setName('exchange.sell');
     $this->post('/exchange/buy', 'ExchangeController:postExchangeBuy')->setName('exchange.buy');
     
     // Mail
     $this->get('/mail/received', 'MailController:getReceivedMessages')->setName('mail.received');
-    
     $this->get('/mail/sent', 'MailController:getSentMessages')->setName('mail.sent');
-    
     $this->get('/mail/new', 'MailController:getNew')->setName('mail.new');
     $this->post('/mail/new', 'MailController:postNew');
-    
     $this->get('/mail/new/{nickname}', 'MailController:getNewWithNickname')->setName('mail.new.withnickname');
-    
     $this->get('/mail/received/delete/{id}', 'MailController:getDeleteReceived')->setName('mail.received.delete');
     $this->get('/mail/sent/delete/{id}', 'MailController:getDeleteSent')->setName('mail.sent.delete');
     

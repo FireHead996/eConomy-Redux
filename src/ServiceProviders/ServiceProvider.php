@@ -6,7 +6,8 @@ abstract class ServiceProvider
 {
     protected $container;
     
-    public function __construct($c) {
+    public function __construct($c)
+    {
         $this->container = $c;
     }
     

@@ -1,6 +1,7 @@
 <?php
+
 //
-// Main configuration
+// Dependencies
 //
 
 // DIC configuration
@@ -17,11 +18,3 @@ $capsule = new \App\ServiceProviders\DatabaseServiceProvider($container);
 $container['db'] = function ($c) {
     return $capsule->provide();
 };
-
-//
-// Require other files
-//
-
-require __DIR__ . '/controllers.php';
-
-require __DIR__ . '/extensions.php';

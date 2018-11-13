@@ -6,14 +6,16 @@ class TwigServiceProvider extends ServiceProvider
 {
     private $twig;
     
-    private function addExtensions() {
+    private function addExtensions()
+    {
         $this->twig->addExtension(new \Slim\Views\TwigExtension(
             $this->container->router,
             $this->container->request->getUri()
         ));
     }
     
-    private function addGlobals() {
+    private function addGlobals()
+    {
         // Add auth
         $this->twig->getEnvironment()->addGlobal('auth', [
             'check' => $this->container->auth->check(),
@@ -25,7 +27,8 @@ class TwigServiceProvider extends ServiceProvider
         $this->twig->getEnvironment()->addGlobal('flash', $this->container->flash);
     }
     
-    public function __construct($c) {
+    public function __construct($c)
+    {
         parent::__construct($c);
         
         $settings = $this->container->get('settings')['twig'];
@@ -38,7 +41,8 @@ class TwigServiceProvider extends ServiceProvider
         $this->addGlobals();
     }
     
-    public function provide() {
+    public function provide()
+    {
         return $this->twig;
     }
 }

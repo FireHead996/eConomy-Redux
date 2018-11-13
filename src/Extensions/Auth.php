@@ -7,22 +7,7 @@ use App\Models\UserStorage;
 
 class Auth
 {
-    /**
-     * DIC
-     *
-     * @var Container
-     */
-    private $container;
-
-    /**
-     * Constructor
-     *
-     * @param Container $container
-     */
-    public function __construct($container)
-    {
-        $this->container = $container;
-    }
+    use \App\Traits\Containerable;
     
     /**
      * Returns true if user is logged, false otherwise
@@ -31,7 +16,7 @@ class Auth
      */
     public function check()
     {
-        return $this->container->session->exists('user');
+        return $this->session->exists('user');
     }
 
     /**
@@ -41,7 +26,7 @@ class Auth
      */
     public function user()
     {
-        return $this->check() ? User::find($_SESSION['user']) : false;
+        return $this->check() ? User::find($this->session->get('user')) : false;
     }
     
     /**
@@ -49,7 +34,7 @@ class Auth
      */
     public function userStorage()
     {
-        return $this->check() ? UserStorage::where('uid', $_SESSION['user'])->first() : false;
+        return $this->check() ? UserStorage::where('uid', $this->session->get('user'))->first() : false;
     }
 
     /**
@@ -63,12 +48,14 @@ class Auth
     {
         $user = User::where('email', $email)->first();
 
-        if (!$user) {
+        if (!$user)
+        {
             return false;
         }
 
-        if (password_verify($password, $user->password)) {
-            $_SESSION['user'] = $user->id;
+        if (password_verify($password, $user->password))
+        {
+            $this->session->set('user', $user->id);
             return true;
         }
         
@@ -82,6 +69,6 @@ class Auth
      */
     public function logout()
     {
-        $this->container->session->delete('user');
+        $this->session->delete('user');
     }
 }

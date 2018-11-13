@@ -38,12 +38,14 @@ class PasswordValid implements RuleInterface
     {
         $user = User::where('email', $this->email)->first();
         
-        if (!$user) {
+        if (!$user)
+        {
             $this->message = 'Wypełnij poprawnie adres email';
             return false;
         }
         
-        if (password_verify($value, $user->password)) {
+        if (password_verify($value, $user->password))
+        {
             return true;
         }
 

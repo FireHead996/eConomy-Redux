@@ -18,7 +18,7 @@ class MailController extends Controller
     public function getReceivedMessages($request, $response)
     {
         $messages = Message::where([
-            'to' => $_SESSION['user'],
+            'to' => $this->session->get('user'),
             'type' => 1,
         ])->get();
         
@@ -37,7 +37,7 @@ class MailController extends Controller
     public function getSentMessages($request, $response)
     {
         $messages = Message::where([
-            'from' => $_SESSION['user'],
+            'from' => $this->session->get('user'),
             'type' => 2,
         ])->get();
         
@@ -68,11 +68,13 @@ class MailController extends Controller
     {
         $user = User::where('nickname', $nickname);
         
-        if ($user->count() === 0) {
+        if ($user->count() === 0)
+        {
             return false;
         }
         
-        if ($user->first()->id == $_SESSION['user']) {
+        if ($user->first()->id == $this->session->get('user'))
+        {
             return false;
         }
         
@@ -89,7 +91,8 @@ class MailController extends Controller
      */
     public function getNewWithNickname($request, $response, $args)
     {
-        if ($this->validateNickname($args['nickname'])) {
+        if ($this->validateNickname($args['nickname']))
+        {
             $this->view->getEnvironment()->addGlobal('nickname', $args['nickname']);
         }
         
@@ -135,14 +138,16 @@ class MailController extends Controller
      */
     public function postNew($request, $response)
     {
-        if ($this->validator->validateNewMail($request)->getErrorsCount() > 0) {
-            $_SESSION['errors'] = $this->validator->getErrors();
+        if ($this->validator->validateNewMail($request)->getErrorsCount() > 0)
+        {
+            $this->session-set('errors', $this->validator->getErrors());
             return $response->withRedirect($this->router->pathFor('mail.new'));
         }
         
         $to = User::where('nickname', $request->getParam('to'))->first();
         
-        if (!$to) {
+        if (!$to)
+        {
             $this->flash->addMessage('danger', 'Nie udało się odnaleźć gracza o tym nicku.');
             return $response->withRedirect($this->router->pathFor('mail.new'));
         }
@@ -163,21 +168,30 @@ class MailController extends Controller
     private function deleteMessage($request, $response, $args) {
         $msg = Message::find($args['id']);
         
-        if (!msg) {
+        if (!msg)
+        {
             $this->flash->addMessage('danger', 'Podana wiadomość nie istnieje.');
             return;
         }
         
-        if ($msg->from == $_SESSION['user'] && $msg->type == 2) {
-            $msg->delete();
-            $this->flash->addMessage('success', 'Wiadomość usunięta.');
-            return;
-        }
-        
-        if ($msg->to == $_SESSION['user'] && $msg->type == 1) {
-            $msg->delete();
-            $this->flash->addMessage('success', 'Wiadomość usunięta.');
-            return;
+        switch ($msg->type)
+        {
+            case 1:
+                if ($msg->to == $this->session->get('user'))
+                {
+                    $msg->delete();
+                    $this->flash->addMessage('success', 'Wiadomość usunięta.');
+                    return;
+                }
+                break;
+            case 2:
+                if ($msg->from == $this->session->get('user'))
+                {
+                    $msg->delete();
+                    $this->flash->addMessage('success', 'Wiadomość usunięta.');
+                    return;
+                }
+                break;
         }
         
         $this->flash->addMessage('danger', 'Podana wiadomość nie istnieje.');
@@ -191,7 +205,8 @@ class MailController extends Controller
      * @param Response $response
      * @return Response
      */
-    public function getDeleteReceived($request, $response, $args) {
+    public function getDeleteReceived($request, $response, $args)
+    {
         $this->deleteMessage($request, $response, $args);
         return $response->withRedirect($this->router->pathFor('mail.received'));
     }
@@ -203,7 +218,8 @@ class MailController extends Controller
      * @param Response $response
      * @return Response
      */
-    public function getDeleteSent($request, $response, $args) {
+    public function getDeleteSent($request, $response, $args)
+    {
         $this->deleteMessage($request, $response, $args);
         return $response->withRedirect($this->router->pathFor('mail.sent'));
     }

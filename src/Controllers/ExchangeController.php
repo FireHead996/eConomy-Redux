@@ -87,21 +87,24 @@ class ExchangeController extends Controller {
      */
     public function postExchangeBuy($request, $response)
     {
-        if ($this->validator->validateExchangeForm($request)->getErrorsCount() > 0) {
+        if ($this->validator->validateExchangeForm($request)->getErrorsCount() > 0)
+        {
             $_SESSION['errors'] = $this->validator->getErrors();
             return $response->withRedirect($this->router->pathFor('exchange'));
         }
         
         $user = User::find($_SESSION['user']);
         
-        if (!$user) {
+        if (!$user)
+        {
             $this->flash->addMessage('danger', 'Nie hakieruj.');
             return $response->withRedirect($this->router->pathFor('exchange'));
         }
         
         $userstorage = UserStorage::where('uid', $_SESSION['user'])->first();
         
-        if (!$userstorage) {
+        if (!$userstorage)
+        {
             $this->flash->addMessage('danger', 'Coś nie pykło :O.');
             return $response->withRedirect($this->router->pathFor('exchange'));
         }
@@ -112,16 +115,20 @@ class ExchangeController extends Controller {
         
         $allcost = 0;
         
-        foreach ($exchangeTab as $element => $value) {
+        foreach ($exchangeTab as $element => $value)
+        {
             $cost = $exchange[$element] * $value;
             $allcost += $cost;
         }
         
-        if ($allcost == 0) {
+        if ($allcost == 0)
+        {
+            $this->flash->addMessage('info', 'Nie wybrano żadnych towarów');
             return $response->withRedirect($this->router->pathFor('exchange'));
         }
         
-        if ($allcost > $user->cash) {
+        if ($allcost > $user->cash)
+        {
             $this->flash->addMessage('danger', 'Nie stać cię na zakup tych towarów');
             return $response->withRedirect($this->router->pathFor('exchange'));
         }
@@ -130,7 +137,8 @@ class ExchangeController extends Controller {
         
         $storage = $this->getStorageValuesAsTable($userstorage);
         
-        foreach ($exchangeTab as $element => $value) {
+        foreach ($exchangeTab as $element => $value)
+        {
             $userstorage->setStorage($element, $storage[$element] + $value);
         }
         

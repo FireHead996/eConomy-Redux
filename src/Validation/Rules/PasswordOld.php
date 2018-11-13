@@ -28,11 +28,13 @@ class PasswordOld implements RuleInterface
     {
         $user = User::find($_SESSION['user']);
         
-        if (!$user) {
+        if (!$user)
+        {
             return false;
         }
         
-        if (password_verify($value, $user->password)) {
+        if (password_verify($value, $user->password))
+        {
             return true;
         }
 
