@@ -33,19 +33,9 @@ class ExchangeController extends Controller {
      */
     public function getExchange($request, $response)
     {
+        $this->view->getEnvironment()->addGlobal('exchange', Exchange::find(1));
+        
         return $this->view->render($response, 'exchange/exchange.twig');
-    }
-    
-    /**
-     * Sell given materials
-     *
-     * @param Request $request
-     * @param Response $response
-     * @return View
-     */
-    public function postExchangeSell($request, $response)
-    {
-        return null;
     }
     
     private function getExchangeTableFromRequest($request)
@@ -85,7 +75,7 @@ class ExchangeController extends Controller {
      * @param Response $response
      * @return View
      */
-    public function postExchangeBuy($request, $response)
+    public function postExchangeBuy($request, $response) //TODO: refactor
     {
         if ($this->validator->validateExchangeForm($request)->getErrorsCount() > 0)
         {
@@ -109,7 +99,7 @@ class ExchangeController extends Controller {
             return $response->withRedirect($this->router->pathFor('exchange'));
         }
         
-        $exchange = $this->getExchangePricesAsTable((Exchange::find(1)));
+        $exchange = $this->getExchangePricesAsTable(Exchange::find(1));
         
         $exchangeTab = $this->getExchangeTableFromRequest($request);
         
@@ -143,6 +133,78 @@ class ExchangeController extends Controller {
         }
         
         $this->flash->addMessage('success', 'Zakupiono towary');
+
+        return $response->withRedirect($this->router->pathFor('exchange'));
+    }
+    
+    /**
+     * Sell given materials
+     *
+     * @param Request $request
+     * @param Response $response
+     * @return View
+     */
+    public function postExchangeSell($request, $response) //TODO: refactor
+    {
+        if ($this->validator->validateExchangeForm($request)->getErrorsCount() > 0)
+        {
+            $_SESSION['errors'] = $this->validator->getErrors();
+            return $response->withRedirect($this->router->pathFor('exchange'));
+        }
+        
+        $user = User::find($_SESSION['user']);
+        
+        if (!$user)
+        {
+            $this->flash->addMessage('danger', 'Nie hakieruj.');
+            return $response->withRedirect($this->router->pathFor('exchange'));
+        }
+        
+        $userstorage = UserStorage::where('uid', $_SESSION['user'])->first();
+        
+        if (!$userstorage)
+        {
+            $this->flash->addMessage('danger', 'Coś nie pykło :O.');
+            return $response->withRedirect($this->router->pathFor('exchange'));
+        }
+        
+        $exchange = $this->getExchangePricesAsTable(Exchange::find(1));
+        
+        $exchangeTab = $this->getExchangeTableFromRequest($request);
+        
+        $allvalue = 0;
+        
+        foreach ($exchangeTab as $element => $value)
+        {
+            $val = $exchange[$element] * $value;
+            $allvalue += $val;
+        }
+        
+        if ($allvalue == 0)
+        {
+            $this->flash->addMessage('info', 'Nie wybrano żadnych towarów');
+            return $response->withRedirect($this->router->pathFor('exchange'));
+        }
+        
+        $storage = $this->getStorageValuesAsTable($userstorage);
+        
+        foreach ($storage as $element => $count)
+        {
+            if ($exchangeTab[$element] > $count)
+            {
+                $this->flash->addMessage('danger', 'Nie masz tylu towarów');
+                return $response->withRedirect($this->router->pathFor('exchange'));
+            }
+        }
+        
+        $user->setCash($user->cash + $allvalue);
+        
+        foreach ($exchangeTab as $element => $value)
+        {
+            $userstorage->setStorage($element, $storage[$element] - $value);
+        }
+        
+        $this->flash->addMessage('success', 'Sprzedano towary');
 
         return $response->withRedirect($this->router->pathFor('exchange'));
     }

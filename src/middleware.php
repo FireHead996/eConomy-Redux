@@ -3,6 +3,9 @@
 // Application middleware
 //
 
+// Pseudocron middleware
+$app->add(new \App\Middleware\PseudocronMiddleware\PseudocronMiddleware($container));
+
 // Validation errors middleware
 $app->add(new \App\Middleware\FormsMiddleware\ValidationErrorsMiddleware($container));
 

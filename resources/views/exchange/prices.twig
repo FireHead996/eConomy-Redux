@@ -27,7 +27,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading"><center>Sprzęt</center></div>
                     <div class="panel-body">
-                        <font color="{% if exchange.equipment_hossa %}green{% else %}red{% endif %}"><b><center>{{ exchange.equipment }} $/t {% if exchange.equipment_hossa %}↑{% else %}↓{% endif %}</center></b></font>
+                        <font color="{% if exchange.equipments_hossa %}green{% else %}red{% endif %}"><b><center>{{ exchange.equipments }} $/t {% if exchange.equipments_hossa %}↑{% else %}↓{% endif %}</center></b></font>
                     </div>
                 </div>
             </div>
@@ -49,8 +49,9 @@
     <div class="panel-body">
     {% if events|length > 0 %}
         {% for event in events %}
-            <div class="alert {% if event.subject %}alert-success{% else %}alert-danger{% endif %}" role="alert">
-                {{ event.content }}
+            <div class="alert {% if event.type == 0 %}alert-success{% else %}alert-danger{% endif %}" role="alert">
+                <h4>{{ event.subject}} ({{ event.created_at }})</h4>
+                <p>{{ event.content }}</p>
             </div>
         {% endfor %}
     {% else %}

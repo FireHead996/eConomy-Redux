@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col-md-3 col-xs-12">
                     <div class="panel panel-default">
-                        <div class="panel-heading"><center>Surowce</center></div>
+                        <div class="panel-heading"><center>Surowce ({{ exchange.raw_materials }} $/t)</center></div>
                         <div class="panel-body">
                             <div class="form-group{{ errors.raw_materials ? ' has-error' : ''}}">
                                 <input type="text" class="form-control" id="inputDefault" name="raw_materials" value="0">
@@ -23,7 +23,7 @@
 
                 <div class="col-md-3 col-xs-12">
                     <div class="panel panel-default">
-                        <div class="panel-heading"><center>Tekstylia</center></div>
+                        <div class="panel-heading"><center>Tekstylia ({{ exchange.fabrics }} $/t)</center></div>
                         <div class="panel-body">
                             <div class="form-group{{ errors.fabrics ? ' has-error' : ''}}">
                                 <input type="text" class="form-control" id="inputDefault" name="fabrics" value="0">
@@ -38,7 +38,7 @@
 
                 <div class="col-md-3 col-xs-12">
                     <div class="panel panel-default">
-                        <div class="panel-heading"><center>Sprzęt</center></div>
+                        <div class="panel-heading"><center>Sprzęt ({{ exchange.equipments }} $/t)</center></div>
                         <div class="panel-body">
                             <div class="form-group{{ errors.equipments ? ' has-error' : ''}}">
                                 <input type="text" class="form-control" id="inputDefault" name="equipments" value="0">
@@ -53,7 +53,7 @@
 
                 <div class="col-md-3 col-xs-12">
                     <div class="panel panel-default">
-                        <div class="panel-heading"><center>Żywność</center></div>
+                        <div class="panel-heading"><center>Żywność ({{ exchange.food }} $/t)</center></div>
                         <div class="panel-body">
                             <div class="form-group{{ errors.food ? ' has-error' : ''}}">
                                 <input type="text" class="form-control" id="inputDefault" name="food" value="0">

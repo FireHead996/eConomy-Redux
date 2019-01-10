@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jan 10, 2019 at 07:18 PM
+-- Generation Time: Jan 10, 2019 at 09:11 PM
 -- Server version: 5.7.21
 -- PHP Version: 7.2.4
 
@@ -106,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `exchange` (
 --
 
 INSERT INTO `exchange` (`id`, `last_change`, `raw_materials`, `raw_materials_hossa`, `fabrics`, `fabrics_hossa`, `equipments`, `equipments_hossa`, `food`, `food_hossa`, `created_at`, `updated_at`) VALUES
-(1, 1537611935, 25, 1, 3, 0, 1, 0, 6, 1, '2018-10-29 20:22:52', '2018-10-29 20:24:03');
+(1, 1547154518, 40, 1, 15, 0, 59, 1, 5, 0, '2018-10-29 20:22:52', '2019-01-10 20:08:38');
 
 -- --------------------------------------------------------
 
@@ -117,12 +117,13 @@ INSERT INTO `exchange` (`id`, `last_change`, `raw_materials`, `raw_materials_hos
 DROP TABLE IF EXISTS `exchange_events`;
 CREATE TABLE IF NOT EXISTS `exchange_events` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `subject` int(11) NOT NULL,
+  `subject` varchar(120) NOT NULL,
+  `type` int(1) NOT NULL,
   `content` varchar(120) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
