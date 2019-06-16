@@ -19,7 +19,7 @@ class ExchangeController extends Controller {
     public function prices($request, $response)
     {
         $this->view->getEnvironment()->addGlobal('exchange', Exchange::find(1));
-        $this->view->getEnvironment()->addGlobal('events', ExchangeEvent::get());
+        $this->view->getEnvironment()->addGlobal('events', ExchangeEvent::limit(10)->orderBy("id", "desc")->get());
         
         return $this->view->render($response, 'exchange/prices.twig');
     }

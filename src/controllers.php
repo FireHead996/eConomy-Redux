@@ -33,3 +33,8 @@ $container['ExchangeController'] = function ($c) {
 $container['MailController'] = function ($c) {
     return new \App\Controllers\Mail\MailController($c);
 };
+
+// Company controller
+$container['CompanyController'] = function ($c) {
+    return new \App\Controllers\CompanyController($c);
+};

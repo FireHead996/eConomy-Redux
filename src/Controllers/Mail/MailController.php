@@ -59,7 +59,7 @@ class MailController extends Controller
     }
     
     /**
-     * Check if 
+     * Check if user with given nickname has account and is logged in
      * 
      * @param type $user
      * @return boolean
@@ -140,7 +140,7 @@ class MailController extends Controller
     {
         if ($this->validator->validateNewMail($request)->getErrorsCount() > 0)
         {
-            $this->session-set('errors', $this->validator->getErrors());
+            $this->session->set('errors', $this->validator->getErrors());
             return $response->withRedirect($this->router->pathFor('mail.new'));
         }
         
@@ -152,7 +152,7 @@ class MailController extends Controller
             return $response->withRedirect($this->router->pathFor('mail.new'));
         }
         
-        $this->sendNewMessage($this->auth->user()->id, $To->id, $request->getParam('subject'), $request->getParam('content'));
+        $this->sendNewMessage($this->auth->user()->id, $to->id, $request->getParam('subject'), $request->getParam('content'));
         $this->flash->addMessage('success', 'Wiadomość została wysłana');
 
         return $response->withRedirect($this->router->pathFor('mail.sent'));

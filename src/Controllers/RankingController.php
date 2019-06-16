@@ -15,7 +15,7 @@ class RankingController extends Controller
      */
     public function index($request, $response)
     {
-        $this->view->getEnvironment()->addGlobal('players', User::all());        
+        $this->view->getEnvironment()->addGlobal('players', User::all());
         return $this->view->render($response, 'ranking.twig');
     }
 }

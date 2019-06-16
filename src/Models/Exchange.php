@@ -20,6 +20,7 @@ class Exchange extends Model
      */
     protected $fillable = [
         'last_change',
+        'last_cleaning',
         'raw_materials',
         'raw_materials_hossa',
         'fabrics',
@@ -30,12 +31,23 @@ class Exchange extends Model
         'food_hossa'
     ];
     
-    public function randomize()
+    public function updateNewPricesTime()
     {
         $this->update([
             'last_change' => time(),
         ]);
-        
+    }
+    
+    public function updateCleaningTime()
+    {
+        $this->update([
+            'last_cleaning' => time(),
+        ]);
+    }
+    
+    // TODO: Throw this method out of the model class
+    public function randomize()
+    {
         $randType = rand(0, 3);
         
         $new_raw_materials = $this->raw_materials;

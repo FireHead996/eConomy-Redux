@@ -1,0 +1,90 @@
+{% extends "templates/app.twig" %}
+
+{% block container %}
+<div class="panel panel-default">
+    <div class="panel-heading">Załóż nową działalność</div>
+    <div class="panel-body">
+    {% if companylist|length > 0 %}
+        <div class="row">
+        {% for company in companylist %}
+            <div class="col-md-6 col-xs-12">
+                <form method="POST">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">{{ company.name }}</div>
+                        <div class="panel-body">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <span class="badge">{{ company.production_per_worker }} {{ company.product }}</span>
+                                    Produkcja / Pracownik
+                                </li>
+                                <li class="list-group-item">
+                                    <span class="badge">{{ company.max_workers}}</span>
+                                    Max pracowników
+                                </li>
+                                <li class="list-group-item">
+                                    <span class="badge">{{ company.points }}</span>
+                                    Punkty za otwarcie
+                                </li>
+                            </ul>
+                            
+                            <hr/>
+                            
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <span class="badge">{{ company.hire_cost }} $</span>
+                                    Koszt zatrudnienia i płaca
+                                </li>
+                                <li class="list-group-item">
+                                    <span class="badge">{{ company.fire_cost }} $</span>
+                                    Koszt zwolnienia
+                                </li>
+                            </ul>
+                            
+                            <hr/>
+                            
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <span class="badge">{{ company.upgrade_cost }} $</span>
+                                    Koszt rozbudowy
+                                </li>
+                                <li class="list-group-item">
+                                    <span class="badge">{{ company.production_growth }}% (z podstawy {{ company.production_per_worker}} {{ company.product }})</span>
+                                    Wzrost produkcji
+                                </li>
+                                <li class="list-group-item">
+                                    <span class="badge">{{ company.upgrade_max_workers }}</span>
+                                    Max pracowników po rozbudowie
+                                </li>
+                                <li class="list-group-item">
+                                    <span class="badge">{{ company.max_level }}</span>
+                                    Max poziom rozbudowy
+                                </li>
+                                <li class="list-group-item">
+                                    <span class="badge">{{ company.upgrade_points }}</span>
+                                    Punkty za rozbudowę
+                                </li>
+                            </ul>
+                                    
+                            <input type="hidden" name="company_id" value="{{ company.id }}"/>
+                                    
+                            {{ csrf.field | raw }}
+                            
+                            {% if company.cost > userCash %}
+                                <center><button type="submit" disabled class="btn btn-primary">Nie posiadasz {{ company.cost }}$ przy sobie</button></center>
+                            {% else %}
+                                <center><button type="submit" formaction="{{ path_for('company.create') }}" class="btn btn-primary">Załóż za {{ company.cost }}$</button></center>
+                            {% endif %}
+                        </div>
+                    </div>
+                </form>
+            </div>
+        {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info" role="alert">
+            Brak firm lub typów
+        </div>
+    {% endif %}
+    </div>
+</div>
+{% endblock %}

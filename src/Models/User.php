@@ -49,4 +49,11 @@ class User extends Model
             'cash' => $cash,
         ]);
     }
+    
+    public function setPoints($points)
+    {
+        $this->update([
+            'points' => $points,
+        ]);
+    }
 }

@@ -1,0 +1,118 @@
+{% extends "templates/app.twig" %}
+
+{% block container %}
+<div class="panel panel-default">
+    <div class="panel-heading">Moje firmy</div>
+    <div class="panel-body">
+    {% if companylist|length > 0 %}
+        {% for company in companylist %}
+        <form method="POST">
+            <div class="panel panel-default">
+                <div class="panel-heading">{{ company.name }} {% if not company.open %}<span style="color: red;">[ZAMKNIĘTA]</span>{% endif %}</div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6 col-xs-12">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <span class="badge">{{ company.production_per_worker }} {{ company.product }}</span>
+                                Produkcja / Pracownik
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge">{{ company.workers }} / {{ company.max_workers }}</span>
+                                Pracuje
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge">{{ company.production }} {{ company.product }}</span>
+                                Produkcja
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge">{{ company.level }}</span>
+                                Poziom
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge">{{ company.costs }} $</span>
+                                Płace
+                            </li>
+                        </ul>
+
+                        <hr/>
+
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <span class="badge">{{ company.hire_cost }} $</span>
+                                Koszt zatrudnienia i płaca
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge">{{ company.fire_cost }} $</span>
+                                Koszt zwolnienia
+                            </li>
+                        </ul>
+                        
+                        </div>
+                        <div class="col-md-6 col-xs-12">
+
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <span class="badge">{{ company.upgrade_cost }} $</span>
+                                Koszt rozbudowy
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge">{{ company.production_growth }}% (z podstawy {{ company.production_per_worker}} {{ company.product }})</span>
+                                Wzrost produkcji
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge">{{ company.upgrade_max_workers }}</span>
+                                Max pracowników po rozbudowie
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge">{{ company.max_level }}</span>
+                                Max poziom rozbudowy
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge">{{ company.upgrade_points }}</span>
+                                Punkty za rozbudowę
+                            </li>
+                        </ul>
+
+                        <hr/>
+
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <a href="#"><span class="badge">Rozbuduj za {{ company.upgrade_cost }} $</span></a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="#"><span class="badge">Zatrudnij za {{ company.hire_cost }} $</span></a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="#"><span class="badge">Zwolnij za {{ company.fire_cost }} $</span></a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="#"><span class="badge">Zamknij firmę (-5 punktów)</span></a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="#"><span class="badge">Sprzedaj za {{ company.value }} $</span></a>
+                            </li>
+                        </ul>
+                        
+                        </div>
+                    </div>
+                    
+                    {{ csrf.field | raw }}
+
+                    {% if company.cost > userCash %}
+                        <center><button type="submit" disabled class="btn btn-primary">Nie posiadasz {{ company.cost }}$ przy sobie</button></center>
+                    {% else %}
+                        <center><button type="submit" formaction="{{ path_for('company.create') }}" class="btn btn-primary">Załóż za {{ company.cost }}$</button></center>
+                    {% endif %}
+                </div>
+            </div>
+        </form>
+        {% endfor %}
+    {% else %}
+        <div class="alert alert-info" role="alert">
+            Brak firm lub typów
+        </div>
+    {% endif %}
+    </div>
+</div>
+{% endblock %}

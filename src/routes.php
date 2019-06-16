@@ -27,6 +27,11 @@ $app->group('', function () {
     // Ranking
     $this->get('/ranking', 'RankingController:index')->setName('ranking');
     
+    // Company management
+    $this->get('/company', 'CompanyController:getCompanyList')->setName('company.list');
+    $this->get('/company/create', 'CompanyController:getCompanyNew')->setName('company.create');
+    $this->post('/company/create', 'CompanyController:postCompanyNew');
+    
     // Exchange (stock market)
     $this->get('/exchange/prices', 'ExchangeController:prices')->setName('exchange.prices');
     $this->get('/exchange', 'ExchangeController:getExchange')->setName('exchange');
