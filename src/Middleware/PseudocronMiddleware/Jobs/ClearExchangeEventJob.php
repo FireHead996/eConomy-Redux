@@ -11,7 +11,7 @@ class ClearExchangeEventJob implements Job
     {
         $exchange = Exchange::find(1)->first();
         
-        if ($exchange->last_change + 86400 > time()) {
+        if ($exchange->last_cleaning + 86400 > time()) {
             return;
         }
         

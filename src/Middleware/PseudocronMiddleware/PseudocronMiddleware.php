@@ -11,7 +11,7 @@ class PseudocronMiddleware
         ExchangeJob::class,
         ClearExchangeEventJob::class,
     ];
-    
+
     /**
      * Pseudo CRONjobs middleware
      *
@@ -19,6 +19,7 @@ class PseudocronMiddleware
      * @param Response $response
      * @param Middleware $next
      * @return Response
+     * @throws \ReflectionException
      */
     public function __invoke($request, $response, $next)
     {
